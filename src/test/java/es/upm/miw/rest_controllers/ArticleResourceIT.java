@@ -32,11 +32,6 @@ class ArticleResourceIT {
         this.articleRepository.deleteAll();
     }
 
-    @BeforeAll
-    void cleanupStart() {
-        this.articleRepository.deleteAll();
-    }
-
     @Test
     void testCreateArticle() {
         ArticleDto bodyArtDto = new ArticleDto("84000008899", "description test", "", BigDecimal.TEN, 10);
@@ -63,4 +58,22 @@ class ArticleResourceIT {
                         .body(new ArticleDto("4800000000011", "new", "", new BigDecimal("-1"), 10)).post().build());
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
     }
+
+    @Test
+    void testReadArticleOne() {
+        ArticleDto articleDto = this.restService.loginAdmin().restBuilder(new RestBuilder<ArticleDto>())
+                .clazz(ArticleDto.class).path(ArticleResource.ARTICLES).path(ArticleResource.CODE_ID).expand("1").get()
+                .build();
+        assertNotNull(articleDto);
+    }
+
+    @Test
+    void testReadArticleNonExist() {
+        HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,
+                () -> this.restService.loginAdmin().restBuilder().path(ArticleResource.ARTICLES)
+                        .path(ArticleResource.CODE_ID).expand("xxxkkkk1111").get().build());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+    }
+
+
 }

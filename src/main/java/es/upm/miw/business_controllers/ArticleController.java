@@ -1,5 +1,7 @@
 package es.upm.miw.business_controllers;
 
+import es.upm.miw.dtos.ArticleMinimumDto;
+import es.upm.miw.dtos.ArticleSearchOutputDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,10 @@ import es.upm.miw.exceptions.NotFoundException;
 import es.upm.miw.repositories.ArticleRepository;
 import es.upm.miw.rest_controllers.RestBuilder;
 import es.upm.miw.rest_controllers.RestService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ArticleController {
@@ -65,6 +71,24 @@ public class ArticleController {
 			throw new NotFoundException("Provider id (" + providerId + ") does not exist");
 		}
 		return provider;
+	}
+
+	public List<ArticleSearchOutputDto> readAll() {
+		return this.articleRepository.findAll().stream().map(ArticleSearchOutputDto::new).collect(Collectors.toList());
+	}
+
+	public List<ArticleMinimumDto> readArticlesMinimum() {
+		List<Article> articles = articleRepository.findAll();
+		List<ArticleMinimumDto> dtos = new ArrayList<>();
+		for (Article article : articles) {
+			dtos.add(new ArticleMinimumDto(article));
+		}
+		return dtos;
+	}
+
+	public ArticleDto readArticle(String code) {
+		return new ArticleDto(this.articleRepository.findById(code)
+				.orElseThrow(() -> new NotFoundException("Article code (" + code + ")")));
 	}
 
 }

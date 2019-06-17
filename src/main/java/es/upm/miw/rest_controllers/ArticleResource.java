@@ -38,4 +38,19 @@ public class ArticleResource {
         return this.articleController.createArticle(articleDto);
     }
 
+    @GetMapping
+    public List<ArticleSearchOutputDto> readAll() {
+        return this.articleController.readAll();
+    }
+
+    @GetMapping(value = CODE_ID)
+    public ArticleDto readArticle(@PathVariable String code) {
+        return this.articleController.readArticle(code);
+    }
+
+    @GetMapping(value = MINIMUM)
+    public List<ArticleMinimumDto> readArticlesMinimum() {
+        return this.articleController.readArticlesMinimum();
+    }
+
 }
