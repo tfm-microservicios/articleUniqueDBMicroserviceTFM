@@ -57,7 +57,7 @@ public class DatabaseSeederService {
 			LogManager.getLogger(this.getClass()).warn("------- Create Article Various -----------");
 			Provider provider = null;
 			this.articleRepository.save(Article.builder(VARIOUS_CODE).reference(VARIOUS_NAME).description(VARIOUS_NAME)
-					.retailPrice("100.00").stock(1000).provider(provider).build());
+					.retailPrice("100.00").stock(1000).providerId("5d07c19c5f09121875d7e5ee").build());
 		}
 	}
 

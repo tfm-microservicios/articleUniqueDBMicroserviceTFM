@@ -25,17 +25,17 @@ import es.upm.miw.dtos.ArticleSearchOutputDto;
 @RequestMapping(ArticleResource.ARTICLES)
 public class ArticleResource {
 
-	public static final String ARTICLES = "/articles";
-	public static final String CODE_ID = "/{code}";
-	public static final String MINIMUM = "/minimum";
-	public static final String SEARCH = "/search";
+    public static final String ARTICLES = "/articles";
+    public static final String CODE_ID = "/{code}";
+    public static final String MINIMUM = "/minimum";
+    public static final String SEARCH = "/search";
 
-	@Autowired
-	private ArticleController articleController;
+    @Autowired
+    private ArticleController articleController;
 
-	@PostMapping
-	public ArticleDto createArticle(@Valid @RequestBody ArticleDto articleDto) {
-		return this.articleController.createArticle(articleDto);
-	}
+    @PostMapping
+    public ArticleDto createArticle(@Valid @RequestBody ArticleDto articleDto) {
+        return this.articleController.createArticle(articleDto);
+    }
 
 }
