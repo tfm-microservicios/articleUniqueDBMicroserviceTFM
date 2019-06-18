@@ -70,7 +70,7 @@ class ArticleResourceIT {
     @Test
     void testReadArticleNonExist() {
         HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,
-                () -> this.restService.loginAdmin().restBuilder().path(ArticleResource.ARTICLES)
+                () -> this.restService.loginAdmin().restBuilder(new RestBuilder<ArticleDto>()).path(ArticleResource.ARTICLES)
                         .path(ArticleResource.CODE_ID).expand("xxxkkkk1111").get().build());
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     }
